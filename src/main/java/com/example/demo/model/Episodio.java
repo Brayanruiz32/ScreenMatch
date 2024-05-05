@@ -1,9 +1,6 @@
-package com.example.model;
+package com.example.demo.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-
-import org.springframework.cglib.core.Local;
 
 public class Episodio {
 

@@ -3,7 +3,8 @@ package com.example.demo;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import com.example.principal.Principal;
+
+import com.example.demo.principal.Principal;
 
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner {
@@ -17,6 +18,6 @@ public class DemoApplication implements CommandLineRunner {
 
 		Principal miPrincipal = new Principal();
 		miPrincipal.muestraElMenu();
-
 	}
+	
 }

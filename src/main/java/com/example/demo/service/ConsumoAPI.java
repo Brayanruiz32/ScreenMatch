@@ -1,4 +1,4 @@
-package com.example.service;
+package com.example.demo.service;
 
 import java.io.IOException;
 import java.net.URI;

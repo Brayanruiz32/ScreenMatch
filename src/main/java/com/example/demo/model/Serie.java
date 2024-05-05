@@ -1,4 +1,4 @@
-package com.example.model;
+package com.example.demo.model;
 
 import java.util.OptionalDouble;
 
@@ -15,11 +15,9 @@ public class Serie {
     @Enumerated(EnumType.STRING)
     private Categoria genero;
 
- 
     private Integer totalDeTemporadas;
 
     private Double evaluacion;
-
 
     private String sinopsis;
 

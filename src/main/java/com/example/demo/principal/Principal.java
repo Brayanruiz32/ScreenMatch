@@ -1,20 +1,16 @@
-package com.example.principal;
+package com.example.demo.principal;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.DoubleSummaryStatistics;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
-import java.util.Optional;
-import com.example.model.DatosSerie;
-import com.example.model.DatosTemporadas;
-import com.example.model.Episodio;
-import com.example.model.Serie;
-import com.example.service.ConsumoAPI;
-import com.example.service.ConvierteDatos;
+
+import com.example.demo.model.DatosSerie;
+import com.example.demo.model.DatosTemporadas;
+import com.example.demo.model.Serie;
+import com.example.demo.service.ConsumoAPI;
+import com.example.demo.service.ConvierteDatos;
 
 public class Principal {
 
