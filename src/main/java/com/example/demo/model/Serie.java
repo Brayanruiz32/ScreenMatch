@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import java.util.List;
 import java.util.OptionalDouble;
 
 import jakarta.persistence.*;
@@ -24,6 +25,12 @@ public class Serie {
     private String poster;
 
     private String actores;
+
+    @Transient
+    private List<Episodio> episodios;
+
+    public Serie() {
+    }
 
     public Serie(DatosSerie datos) {
         this.titulo = datos.titulo();

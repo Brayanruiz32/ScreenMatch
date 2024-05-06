@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import com.example.demo.model.DatosSerie;
 import com.example.demo.model.DatosTemporadas;
 import com.example.demo.model.Serie;
+import com.example.demo.repository.SerieRepository;
 import com.example.demo.service.ConsumoAPI;
 import com.example.demo.service.ConvierteDatos;
 
@@ -20,6 +21,11 @@ public class Principal {
     private ConvierteDatos conversor = new ConvierteDatos();
     private String apiKey = "&apiKey=83ba97a4";
     private List<DatosSerie> datosSeries = new ArrayList<>();
+    private SerieRepository repositorio;
+    
+    public Principal(SerieRepository repository) {
+        this.repositorio = repository;    
+    }
 
     public void muestraElMenu() {
         String menu = """
@@ -153,16 +159,15 @@ public class Principal {
 
     private void buscarSerieWeb() {
         DatosSerie datos = getDatosSerie();
-        datosSeries.add(datos);
+        //datosSeries.add(datos);
+        Serie serie = new Serie(datos);
+        repositorio.save(serie);
         System.out.println(datos);
 
     }
 
     private void mostrarSeriesBuscadas() {
-        List<Serie> series = new ArrayList<>();
-        series = datosSeries.stream()
-                .map(d -> new Serie(d))
-                .collect(Collectors.toList());
+        List<Serie> series = repositorio.findAll();
         series.stream()
             .sorted(Comparator.comparing(Serie::getGenero))
             .forEach(System.out::println);
