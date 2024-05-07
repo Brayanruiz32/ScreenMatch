@@ -2,8 +2,21 @@ package com.example.demo.model;
 
 import java.time.LocalDate;
 
-public class Episodio {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
 
+
+
+@Entity
+@Table(name = "episodios")
+public class Episodio {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
     private Integer temporada;
 
     private String titulo;
@@ -14,7 +27,13 @@ public class Episodio {
 
     private LocalDate fechaDeLanzamiento;
 
+    @ManyToOne
+    private Serie serie;
     
+    public Episodio(){
+        
+    }
+
     public Episodio(Integer numero, DatosEpisodio p) {
         this.temporada = numero ;
         this.titulo = p.titulo();
@@ -75,6 +94,14 @@ public class Episodio {
 
     public void setFechaDeLanzamiento(LocalDate fechaDeLanzamiento) {
         this.fechaDeLanzamiento = fechaDeLanzamiento;
+    }
+
+    public Serie getSerie() {
+        return serie;
+    }
+
+    public void setSerie(Serie serie) {
+        this.serie = serie;
     }
 
 }

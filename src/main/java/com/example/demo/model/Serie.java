@@ -26,7 +26,7 @@ public class Serie {
 
     private String actores;
 
-    @Transient
+    @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Episodio> episodios;
 
     public Serie() {
@@ -94,15 +94,27 @@ public class Serie {
         return actores;
     }
 
+    public List<Episodio> getEpisodios() {
+        return episodios;
+    }
+
+    public void setEpisodios(List<Episodio> episodios) {
+        //al momento de persistir la serie en la BD, guardamos la lista de episodios con su serie como tal
+        episodios.forEach(e -> e.setSerie(this));
+        this.episodios = episodios;
+    }
+
     public void setActores(String actores) {
         this.actores = actores;
     }
 
+
+
     @Override
     public String toString() {
-        return "[" + " genero=" + genero + "titulo=" + titulo + ", totalDeTemporadas=" + totalDeTemporadas
-                + ", evaluacion=" + evaluacion
-                + ", sinopsis=" + sinopsis + ", poster=" + poster + ", actores=" + actores + "]";
+        return "Episodio: Id=" + Id + ", titulo=" + titulo + ", genero=" + genero + ", totalDeTemporadas="
+                + totalDeTemporadas + ", evaluacion=" + evaluacion + ", sinopsis=" + sinopsis + ", poster=" + poster
+                + ", actores=" + actores + ", episodios=" + episodios + "]";
     }
 
     public Long getId() {
