@@ -16,6 +16,7 @@ public interface EpisodioRepository extends JpaRepository<Episodio, Long> {
 
     Episodio findTop1ByTituloIgnoreCase(String Titulo);
 
-
+    // List<Episodio> findTop5ByOrderByEvaluacionDesc();
+    
 
 }

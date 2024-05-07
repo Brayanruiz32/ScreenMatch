@@ -23,8 +23,10 @@ public interface SerieRepository extends JpaRepository<Serie, Long> {
     @Query("SELECT s FROM Serie s WHERE s.totalDeTemporadas <= :totalTemporadas AND s.evaluacion >= :evaluacion")
     List<Serie> seriesPorMaxTempYMinEva(int totalTemporadas, double evaluacion);
 
- 
+    @Query("SELECT e FROM Serie s JOIN s.episodios e WHERE e.titulo ILIKE %:titulo%")
+    List<Episodio> obtenerEpisodioPorTitulo(String titulo);
 
-
+    @Query("SELECT e FROM Serie s JOIN s.episodios e WHERE s = :serie ORDER BY e.evaluacion DESC LIMIT 5")
+    List<Episodio> obtenerTop5EpisodiosPorSerie(Serie serie);
 
 }

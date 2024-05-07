@@ -28,14 +28,15 @@ public class Principal {
     private final String URL_BASE = "https://www.omdbapi.com/?t=";
     private ConvierteDatos conversor = new ConvierteDatos();
     private String apiKey = "&apiKey=83ba97a4";
-    //private List<DatosSerie> datosSeries = new ArrayList<>();
+    // private List<DatosSerie> datosSeries = new ArrayList<>();
 
     private SerieRepository repositorio;
     private EpisodioRepository episodioRepo;
     private List<Serie> series;
+    private Optional<Serie> serieBuscada;
 
     public Principal(List<JpaRepository> repositorios) {
-        
+
         this.repositorio = (SerieRepository) repositorios.get(0);
         this.episodioRepo = (EpisodioRepository) repositorios.get(1);
     }
@@ -81,10 +82,10 @@ public class Principal {
                     buscarPorMaxTempYMinEva();
                     break;
                 case 8:
-                   buscarEpisodioPorNombre();
+                    buscarEpisodioPorNombre();
                     break;
                 case 9:
-                    buscarPorMaxTempYMinEva();
+                    buscarTop5Episodios();
                     break;
                 case 0:
                     System.out.println("Cerrando la aplicación...");
@@ -171,17 +172,26 @@ public class Principal {
 
     }
 
+    private void buscarTop5Episodios() {
+        buscarSerie();
+  
+        if (serieBuscada.isPresent()) {
+            Serie serie = serieBuscada.get();
+            List<Episodio> topEpisodios = repositorio.obtenerTop5EpisodiosPorSerie(serie);
+            topEpisodios.forEach(t -> System.out.println("Titulo "+t.getTitulo()+" evaluacion "+t.getEvaluacion()+" temporada "+t.getTemporada()));
+        }else{
+            System.out.println("Serie no encontrada");
+        }
+
+    }
+
     private void buscarEpisodioPorNombre() {
         System.out.println("Escribe el nombre de la serie que deseas buscar");
         String nombre = teclado.nextLine();
-        //Optional<List<Episodio>> miEpisodio = Optional.of(repositorio.findTop1ByTituloIgnoreCase(nombre));
-        Optional<Episodio> miEpisodio = Optional.of(episodioRepo.findTop1ByTituloIgnoreCase(nombre));
-        if (miEpisodio.isPresent()) {
-            System.out.println(miEpisodio.get());
-            //miEpisodio.stream().forEach(t -> t.stream().forEach(e -> System.out.println(e)));
-        }else{
-            System.out.println("No se encontró coincidencias");
-        }
+        // Optional<List<Episodio>> miEpisodio =
+        // Optional.of(repositorio.findTop1ByTituloIgnoreCase(nombre));
+        List<Episodio> misEpisodios = repositorio.obtenerEpisodioPorTitulo(nombre);
+        misEpisodios.forEach(e -> System.out.println(e.getTitulo() + " " + e.getSerie().getTitulo()));
     }
 
     private void buscarPorMaxTempYMinEva() {
@@ -274,13 +284,14 @@ public class Principal {
     private void buscarSerie() {
         System.out.println("Que serie deseas buscar?");
         String nombreSerie = teclado.nextLine();
-        Optional<Serie> serie = repositorio.findByTituloIgnoreCase(nombreSerie);
-        if (serie.isPresent()) {
-            System.out.println(serie.get());
+        serieBuscada = repositorio.findByTituloIgnoreCase(nombreSerie);
+        if (serieBuscada.isPresent()) {
+            //System.out.println(serieBuscada.get());
+
         } else {
             System.out.println("No se encuentra la serie en la BD");
         }
-        muestraElMenu();
+       
     }
 
 }
