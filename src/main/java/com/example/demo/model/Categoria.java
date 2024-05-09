@@ -2,7 +2,7 @@ package com.example.demo.model;
 
 public enum Categoria {
     
-    ACCION("Action", "Accion"),
+    ACCION("Action", "Acción"),
 
     ROMANCE("Romance", "Romance"),
 

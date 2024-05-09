@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.demo.dto.EpisodioDTO;
 import com.example.demo.dto.SerieDTO;
+import com.example.demo.model.Categoria;
 import com.example.demo.model.Serie;
 import com.example.demo.repository.SerieRepository;
 
@@ -55,5 +56,21 @@ public class SerieService {
     public List<EpisodioDTO> obtenerTemporadasEspecifica(Long id, int idTemporada) {
         List<EpisodioDTO> episodioTemporada = obtenerTemporadas(id);
         return episodioTemporada.stream().filter( e -> e.temporada() == idTemporada).collect(Collectors.toList());
+    }
+
+    public List<SerieDTO> obtenerPorCategoria(String categoria) {
+        Categoria categoriaBuscada = null;
+        try {
+            categoriaBuscada = Categoria.fromEspanol(categoria);    
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        Optional<List<Serie>> series = repository.findByGenero(categoriaBuscada);
+        if (series.isPresent()) {
+            return convierteDatos(series.get());
+        }
+
+        //List<Serie> series = repository.consultaPorCategoria(categoriaBuscada);
+        return null;
     }
 }

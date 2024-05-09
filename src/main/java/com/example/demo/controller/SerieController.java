@@ -56,5 +56,10 @@ public class SerieController {
         return servicio.obtenerTemporadasEspecifica(id, idTemporada);
     }
 
+    @GetMapping("/categoria/{categoria}")
+    public List<SerieDTO> getMethodName(@PathVariable String categoria) {
+        return servicio.obtenerPorCategoria(categoria);
+    }
+
 
 }
